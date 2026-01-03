@@ -4,17 +4,17 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - "src/**"
-      - "tests/**"
-      - "pyproject.toml"
-      - "uv.lock"
+      - "backend/src/**"
+      - "backend/tests/**"
+      - "backend/pyproject.toml"
+      - "backend/uv.lock"
   pull_request:
     branches: [main, develop]
     paths:
-      - "src/**"
-      - "tests/**"
-      - "pyproject.toml"
-      - "uv.lock"
+      - "backend/src/**"
+      - "backend/tests/**"
+      - "backend/pyproject.toml"
+      - "backend/uv.lock"
 
 jobs:
   quality:
@@ -36,22 +36,29 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
+        working-directory: ./backend
         run: uv sync
 
       - name: Mypy
+        working-directory: ./backend
         run: uv run mypy src tests
 
       - name: Run tests with coverage
+        working-directory: ./backend
         run: uv run coverage run -m pytest tests
 
       - name: Generate coverage report
+        working-directory: ./backend
         run: uv run coverage report
 
       - name: Check coverage threshold
+        working-directory: ./backend
         run: uv run coverage report --fail-under=80
 
       - name: Lint code
+        working-directory: ./backend
         run: uv run ruff check src tests
 
       - name: Check code formatting
+        working-directory: ./backend
         run: uv run ruff format --check src tests
