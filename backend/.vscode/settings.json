@@ -1,0 +1,28 @@
+{
+    "editor.rulers": [
+        80,
+        100
+    ],
+    "python.languageServer": "Pylance",
+    "[python]": {
+        "editor.formatOnPaste": false,
+        "editor.formatOnType": true,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "always",
+            "source.organizeImports": "always"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "ruff.nativeServer": "on",
+    "ruff.lint.preview": true,
+    "python.testing.pytestEnabled": true,
+
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+
+    "[markdown]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "diffEditor.ignoreTrimWhitespace": true
+    },
+}
