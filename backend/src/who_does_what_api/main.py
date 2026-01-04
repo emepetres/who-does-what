@@ -2,7 +2,7 @@ from who_does_what_api import logger
 from who_does_what_api.settings import app_settings
 
 
-def hello_world(message):
+def hello_world(message: str) -> str:
     return message.upper()
 
 

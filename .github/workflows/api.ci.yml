@@ -16,6 +16,9 @@ on:
       - "backend/pyproject.toml"
       - "backend/uv.lock"
 
+permissions:
+  contents: read
+
 jobs:
   quality:
     name: Code Quality & Tests
@@ -23,38 +26,36 @@ jobs:
     defaults:
       run:
         working-directory: ./backend
+    strategy:
+      matrix:
+        # Update this as needed:
+        # Common platforms: ["ubuntu-latest", "macos-latest", "windows-latest"]
+        os: ["ubuntu-latest"]
+        python-version: ["3.12"]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          # Important for versioning plugins:
+          fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
+          # Update this as needed:
+          version: "0.9.5"
           enable-cache: true
+          python-version: ${{ matrix.python-version }}
 
-      - name: Install dependencies
-        run: uv sync
+      - name: Set up Python (using uv)
+        run: uv python install
 
-      - name: Mypy
-        run: uv run mypy src tests
+      - name: Install all dependencies
+        run: make install
+
+      - name: Run linting
+        run: make lint
 
       - name: Run tests with coverage
-        run: uv run coverage run -m pytest tests
-
-      - name: Generate coverage report
-        run: uv run coverage report
-
-      - name: Check coverage threshold
-        run: uv run coverage report --fail-under=80
-
-      - name: Lint code
-        run: uv run ruff check src tests
-
-      - name: Check code formatting
-        run: uv run ruff format --check src tests
+        run: make test
