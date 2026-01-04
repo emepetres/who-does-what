@@ -7,10 +7,14 @@ def hello_world(message: str) -> str:
     return message.upper()
 
 
-if __name__ == "__main__":
+def main() -> None:
     result = hello_world("Hello world!!")
     logger.info(result)
 
     logger.info("----Settings sample----")
     logger.info("MY_SAMPLE_VARIABLE", app_settings.MY_SAMPLE_VARIABLE)
     logger.info("ANOTHER_VARIABLE", app_settings.ANOTHER_VARIABLE)
+
+
+if __name__ == "__main__":
+    main()
