@@ -26,6 +26,7 @@ dev = [
     "pytest-sugar>=1.1.1",
     "rich>=14.2.0",
     "ruff>=0.14.10",
+    "uvicorn>=0.40.0",
 ]
 
 [project.scripts]
