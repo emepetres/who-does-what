@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
 from who_does_what_api import logger
 from loguru import logger
@@ -11,6 +12,9 @@ app = FastAPI()
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+
+FastAPIInstrumentor.instrument_app(app)
 
 
 def hello_world(message: str) -> str:
