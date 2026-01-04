@@ -75,7 +75,7 @@ Always use full type annotations, generics, and other modern practices.
 
 - Always use full, absolute imports for paths.
   do NOT use `from .module1.module2 import ...`. Such relative paths make it hard to
-  refactor. Use `from toplevel_pkg.module1.modlule2 import ...` instead.
+  refactor. Use `from toplevel_pkg.module1.module2 import ...` instead.
 
 - Be sure to import things like `Callable` and other types from the right modules,
   remembering that many are now in `collections.abc` or `typing_extensions`. For
