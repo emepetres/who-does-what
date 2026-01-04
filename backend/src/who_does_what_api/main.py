@@ -1,6 +1,16 @@
+from fastapi import FastAPI
+
+from who_does_what_api import logger
 from loguru import logger
 
 from who_does_what_api.settings import app_settings
+
+app = FastAPI()
+
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
 
 def hello_world(message: str) -> str:
