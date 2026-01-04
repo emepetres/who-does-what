@@ -1,7 +1,16 @@
 import pytest
+from fastapi.testclient import TestClient
 from loguru import logger
 
-from who_does_what_api.main import hello_world, main
+from who_does_what_api.main import app, hello_world, main
+
+client = TestClient(app)
+
+
+def test_root_endpoint():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json() == {"message": "Hello World"}
 
 
 @pytest.mark.parametrize("input_string", ["hello world", "hello1, world2"])

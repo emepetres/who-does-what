@@ -28,6 +28,9 @@ upgrade:
 build:
 	uv build
 
+dev:
+	uv run uvicorn who_does_what_api.main:app --host 0.0.0.0 --port 8000 --reload
+
 agent-rules: CLAUDE.md AGENTS.md
 
 # Use .cursor/rules for sources of rules.
@@ -49,8 +52,7 @@ endif
 clean:
 	-rm -rf dist/
 	-rm -rf *.egg-info/
-	-rm -rf .pytest_cache/
-	-rm -rf .mypy_cache/
+	-rm -rf .*_cache/
 	-rm -rf .venv/
 	-rm -rf CLAUDE.md AGENTS.md
 	-find . -type d -name "__pycache__" -exec rm -rf {} +

@@ -10,6 +10,7 @@ dynamic = ["version"]
 
 dependencies = [
     "loguru>=0.7.3",
+    "fastapi>=0.128.0",
     "pydantic-settings>=2.12.0",
 ]
 
@@ -19,10 +20,12 @@ dev = [
     "codespell>=2.4.1",
     "coverage>=7.13.1",
     "funlog>=0.2.1",
+    "httpx>=0.28.1",
     "pytest>=9.0.2",
     "pytest-sugar>=1.1.1",
     "rich>=14.2.0",
     "ruff>=0.14.10",
+    "uvicorn>=0.40.0",
 ]
 
 [project.scripts]
