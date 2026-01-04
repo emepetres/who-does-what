@@ -17,12 +17,11 @@
     "ruff.nativeServer": "on",
     "ruff.lint.preview": true,
     "python.testing.pytestEnabled": true,
-
     "python.analysis.autoFormatStrings": true,
     "python.analysis.inlayHints.functionReturnTypes": true,
-
     "[markdown]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "diffEditor.ignoreTrimWhitespace": true
     },
+    "makefile.configureOnOpen": false,
 }
