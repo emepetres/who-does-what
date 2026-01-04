@@ -1,10 +1,8 @@
 import pytest
+from fastapi.testclient import TestClient
 from loguru import logger
 
-from who_does_what_api.main import hello_world, main
-from fastapi.testclient import TestClient
-
-from who_does_what_api.main import app, hello_world
+from who_does_what_api.main import app, hello_world, main
 
 client = TestClient(app)
 
