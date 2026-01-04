@@ -32,11 +32,19 @@ agent-rules: CLAUDE.md AGENTS.md
 
 # Use .cursor/rules for sources of rules.
 # Create Claude and Codex rules from these.
+ifeq ($(OS),Windows_NT)
 CLAUDE.md: .cursor/rules/general.mdc .cursor/rules/python.mdc
 	cat .cursor/rules/general.mdc, .cursor/rules/python.mdc > CLAUDE.md
 
 AGENTS.md: .cursor/rules/general.mdc .cursor/rules/python.mdc
 	cat .cursor/rules/general.mdc, .cursor/rules/python.mdc > AGENTS.md
+else
+CLAUDE.md: .cursor/rules/general.mdc .cursor/rules/python.mdc
+	cat .cursor/rules/general.mdc .cursor/rules/python.mdc > CLAUDE.md
+
+AGENTS.md: .cursor/rules/general.mdc .cursor/rules/python.mdc
+	cat .cursor/rules/general.mdc .cursor/rules/python.mdc > AGENTS.md
+endif
 
 clean:
 	-rm -rf dist/

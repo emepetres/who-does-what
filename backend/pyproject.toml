@@ -50,7 +50,7 @@ bump = true
 
 [tool.hatch.build.targets.wheel]
 # The source location for the package.
-packages = ["src/{{ package_module }}"]
+packages = ["src/who_does_what_api"]
 
 # ---- Settings ----
 
