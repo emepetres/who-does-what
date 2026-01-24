@@ -1,8 +1,6 @@
 services:
   backend:
-    build:
-      context: ..
-      dockerfile: .devcontainer/backend/Dockerfile
+    image: mcr.microsoft.com/devcontainers/python:3.12
     command: sleep infinity
     volumes:
       - ..:/workspaces/who-does-what:cached

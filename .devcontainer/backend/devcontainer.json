@@ -8,6 +8,7 @@
   "runServices": [
     "db"
   ],
+  "postCreateCommand": "bash ./backend/devtools/install-dependencies.sh",
   "postStartCommand": "bash ./backend/devtools/db/init-db.sh",
   "shutdownAction": "stopCompose",
   "remoteUser": "vscode",
