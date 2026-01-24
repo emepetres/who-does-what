@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: .devcontainer/backend/Dockerfile
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces/who-does-what:cached
+    environment:
+      MSSQL_HOST: db
+      MSSQL_PORT: "1433"
+      DB_NAME: who_does_what
+      DB_APP_USER: app
+      DB_APP_PASSWORD: ${DB_APP_PASSWORD:-AppPassword!1}
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-YourStrong!Passw0rd}
+    depends_on:
+      - db
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-YourStrong!Passw0rd}
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+volumes:
+  mssql-data:

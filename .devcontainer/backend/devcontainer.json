@@ -1,0 +1,21 @@
+{
+  "name": "who-does-what-backend",
+  "dockerComposeFile": [
+    "../../backend/docker-compose.yml"
+  ],
+  "service": "backend",
+  "workspaceFolder": "/workspaces/who-does-what",
+  "runServices": [
+    "db"
+  ],
+  "postStartCommand": "bash ./backend/devtools/db/init-db.sh",
+  "shutdownAction": "stopCompose",
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "openai.chatgpt"
+      ]
+    }
+  }
+}
