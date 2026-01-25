@@ -35,3 +35,9 @@ BEGIN
     ALTER ROLE db_datawriter ADD MEMBER [$(DB_APP_USER)];
 END
 GO
+
+IF IS_ROLEMEMBER('db_ddladmin', '$(DB_APP_USER)') <> 1
+BEGIN
+    ALTER ROLE db_ddladmin ADD MEMBER [$(DB_APP_USER)];
+END
+GO

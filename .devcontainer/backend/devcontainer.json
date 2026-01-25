@@ -9,7 +9,7 @@
     "db"
   ],
   "postCreateCommand": "bash ./backend/devtools/install-dependencies.sh",
-  "postStartCommand": "bash ./backend/devtools/db/init-db.sh",
+  "postStartCommand": "bash -lc \"bash ./backend/devtools/db/init-db.sh && cd backend && make db-upgrade\"",
   "shutdownAction": "stopCompose",
   "remoteUser": "vscode",
   "customizations": {
