@@ -2,6 +2,10 @@
 CLAUDE.md
 AGENTS.md
 
+# Terraform local config
+infra/backend.hcl
+infra/terraform.tfvars
+
 # Additions to standard GitHub .gitignore:
 *.bak
 *.orig

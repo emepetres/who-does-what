@@ -1,0 +1,4 @@
+resource_group_name  = "who-does-what-tfstate-rg"
+storage_account_name = "whodoeswhattfstate"
+container_name       = "tfstate"
+key                  = "who-does-what/infra.tfstate"

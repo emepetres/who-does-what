@@ -1,0 +1,74 @@
+name: Infra - Deploy (Azure)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "backend/infra/**"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend/infra
+    env:
+      TF_IN_AUTOMATION: "true"
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      TFSTATE_RESOURCE_GROUP: ${{ vars.TFSTATE_RESOURCE_GROUP }}
+      TFSTATE_STORAGE_ACCOUNT: ${{ vars.TFSTATE_STORAGE_ACCOUNT }}
+      TFSTATE_CONTAINER: ${{ vars.TFSTATE_CONTAINER }}
+      TFSTATE_KEY: ${{ vars.TFSTATE_KEY }}
+      TF_VAR_resource_group_name: ${{ vars.AZURE_RESOURCE_GROUP }}
+      TF_VAR_location: ${{ vars.AZURE_LOCATION || 'eastus' }}
+      TF_VAR_app_name: ${{ vars.AZURE_APP_NAME }}
+      TF_VAR_sql_server_name: ${{ vars.AZURE_SQL_SERVER_NAME }}
+      TF_VAR_sql_admin_login: ${{ vars.AZURE_SQL_ADMIN_LOGIN }}
+      TF_VAR_sql_admin_password: ${{ secrets.AZURE_SQL_ADMIN_PASSWORD }}
+      TF_VAR_db_app_user: ${{ vars.AZURE_DB_APP_USER || 'app' }}
+      TF_VAR_db_app_password: ${{ secrets.AZURE_DB_APP_PASSWORD }}
+      TF_VAR_service_plan_sku: ${{ vars.AZURE_SERVICE_PLAN_SKU || 'B1' }}
+      TF_VAR_odbc_driver: ${{ vars.AZURE_ODBC_DRIVER || 'ODBC Driver 18 for SQL Server' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.6"
+
+      - name: Write backend.hcl
+        run: |
+          cat <<HCL > backend.hcl
+          resource_group_name  = "${TFSTATE_RESOURCE_GROUP}"
+          storage_account_name = "${TFSTATE_STORAGE_ACCOUNT}"
+          container_name       = "${TFSTATE_CONTAINER}"
+          key                  = "${TFSTATE_KEY}"
+          HCL
+
+      - name: Terraform Init
+        run: terraform init -backend-config=backend.hcl
+
+      - name: Terraform Plan
+        run: terraform plan -input=false
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false
