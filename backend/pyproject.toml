@@ -102,6 +102,10 @@ ignore = [
     "ISC002", # https://docs.astral.sh/ruff/rules/multi-line-implicit-string-concatenation/
 ]
 
+[tool.ruff.lint.flake8-bugbear]
+# Allow default arguments like, e.g., `data: List[str] = fastapi.Query(None)`.
+extend-immutable-calls = ["Depends", "fastapi.Depends", "Query", "fastapi.Query"]
+
 [tool.basedpyright]
 # BasedPyright currently seems like the best type checker option, much faster
 # than mypy and with a good extension for VSCode/Cursor.
@@ -128,6 +132,8 @@ reportUnreachable = false
 # reportUnnecessaryIsInstance = false
 # reportUnknownVariableType = false
 # reportUnknownArgumentType = false
+# Added for FastAPI usage:
+reportCallInDefaultInitializer = false
 
 [tool.codespell]
 # Add here as needed:
